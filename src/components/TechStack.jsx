@@ -4,7 +4,7 @@ import { Terminal } from 'lucide-react';
 import { techGroupsData } from '../constants/portfolioData';
 
 export const TechStack = () => (
-    <section id="tech" className="py-24 flex flex-col items-center overflow-hidden">
+    <section id="tech" className="py-8 flex flex-col items-center overflow-hidden">
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -4,7 +4,7 @@ import { GraduationCap } from 'lucide-react';
 import { educationSummaryData } from '../constants/portfolioData';
 
 export const Education = () => (
-    <section className="py-20 w-full">
+    <section className="py-8 w-full">
         <div className="flex items-center gap-4 mb-12">
             <div className="w-12 h-12 rounded-2xl bg-zinc-900 flex items-center justify-center text-white">
                 <GraduationCap size={20} />

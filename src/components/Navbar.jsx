@@ -60,7 +60,7 @@ export const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     className="text-3xl md:text-4xl font-black tracking-tighter cursor-pointer flex items-center group"
                 >
-                    <span className="text-black group-hover:text-zinc-600 transition-colors duration-300">MD.</span>
+                    <span className="text-black group-hover:text-zinc-600 transition-colors duration-300">MM.</span>
                     <div className="w-2 h-2 bg-black rounded-full ml-2 self-end mb-2 group-hover:bg-zinc-600 transition-colors duration-300"></div>
                 </motion.div>
 

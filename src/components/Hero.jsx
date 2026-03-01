@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, ExternalLink, Mail } from 'lucide-react';
 import { heroRoles, profileData } from '../constants/portfolioData';
@@ -24,6 +24,12 @@ const TypingAnimation = ({ roles }) => {
         return () => clearTimeout(timeout);
     }, [currentText, isDeleting, currentRole, roles]);
 
+    const mailtoHref = useMemo(() => {
+        const subject = 'New Project Inquiry';
+        const body = `Hello ${profileData?.name},\n\nI would like to discuss a project with you`;
+        return `mailto:${profileData?.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }, [profileData?.email, profileData?.name]);
+
     return (
         <span className="text-zinc-600">
             {currentText}
@@ -45,7 +51,7 @@ export const Hero = () => {
                 <div className="relative group">
                     <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl">
                         <img
-                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop"
+                            src={`${profileData?.image}`}
                             alt="Profile"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
@@ -57,7 +63,7 @@ export const Hero = () => {
                         className="absolute -right-4 top-4 bg-white px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2"
                     >
                         <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        <span className="text-sm font-bold tracking-tight text-zinc-900">Available</span>
+                        {/* <span className="text-sm font-bold tracking-tight text-zinc-900">Available</span> */}
                     </motion.div>
                     <motion.div
                         initial={{ y: 20, opacity: 0 }}
@@ -104,14 +110,16 @@ export const Hero = () => {
                 transition={{ delay: 0.7, duration: 0.8 }}
                 className="flex flex-col md:flex-row items-center gap-4 mb-8"
             >
-                <motion.button
+                <motion.a
+
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    href='#contact'
                     className="bg-black text-white px-10 py-4 rounded-full text-sm font-bold hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200 flex items-center gap-2"
                 >
                     Latest Work
                     <ExternalLink size={16} />
-                </motion.button>
+                </motion.a>
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

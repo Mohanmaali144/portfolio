@@ -24,7 +24,7 @@ export const Footer = () => {
                     {/* Brand Info */}
                     <div className="flex flex-col gap-6 text-left max-w-lg">
                         <div className="text-3xl font-black tracking-tighter cursor-pointer flex items-center group" onClick={scrollToTop}>
-                            <span className="text-black group-hover:text-zinc-500 transition-colors uppercase">md.</span>
+                            <span className="text-black group-hover:text-zinc-500 transition-colors uppercase">mm.</span>
                             <div className="w-2 h-2 bg-black rounded-full ml-1 self-end mb-2 transition-colors"></div>
                         </div>
                         <p className="text-xl md:text-2xl font-medium text-zinc-900 leading-[1.2] tracking-tight">

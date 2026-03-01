@@ -7,7 +7,7 @@ export const Projects = () => {
     const [selectedProject, setSelectedProject] = useState(null);
 
     return (
-        <section id="work" className="py-20 flex flex-col items-center">
+        <section id="work" className="py-8 flex flex-col items-center">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}

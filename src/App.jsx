@@ -31,8 +31,8 @@ export default function App() {
 
         <TrustBar />
 
-        <div className="max-w-full mx-auto p-4 md:p-10">
-          <div className="space-y-4">
+        <div className="max-w-full mx-auto p-4 md:p-10">  
+          <div className="space-y-2">
             <Services />
             <Process />
             <TechStack />

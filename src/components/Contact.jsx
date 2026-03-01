@@ -12,11 +12,9 @@ export const Contact = () => {
 
     const mailtoHref = useMemo(() => {
         const subject = 'New Project Inquiry';
-        const body = formData.message?.trim()
-            ? `Hello ${profileData.name},\n\nI would like to discuss a project with you.\n\nMessage:\n${formData.message.trim()}\n\n---\nName: ${formData.name?.trim() || ''}\nEmail: ${formData.email?.trim() || ''}`
-            : `Hello ${profileData.name},\n\nI would like to discuss a project with you.\n\n---\nName: ${formData.name?.trim() || ''}\nEmail: ${formData.email?.trim() || ''}`;
-        return `mailto:${profileData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    }, [formData.email, formData.message, formData.name]);
+        const body =  `Hello ${profileData?.name},\n\nI would like to discuss a project with you`;
+        return `mailto:${profileData?.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }, [profileData?.email, profileData?.name]);
 
     const emailJsConfig = useMemo(
         () => ({
@@ -93,7 +91,7 @@ export const Contact = () => {
     };
 
     return (
-        <section id="contact" className="py-16 md:py-24 px-6 md:px-16 w-full bg-[#F2F2F2] rounded-[3rem] md:rounded-[5rem] transition-all duration-500">
+        <section id="contact" className="py-8 md:py-16 px-6 md:px-16 w-full bg-[#F2F2F2] rounded-[3rem] md:rounded-[5rem] transition-all duration-500">
             <div className="flex flex-col lg:flex-row gap-12 items-center">
                 {/* Left Content: Text and Info */}
                 <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left gap-8">

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { trustBarBuildTypesData } from '../constants/portfolioData';
 
 export const TrustBar = () => (
-    <section className="py-20 bg-white relative overflow-hidden trust-section">
+    <section className="py-8 bg-white relative overflow-hidden trust-section">
         {/* Subtle Section Divider */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-12 bg-gradient-to-b from-zinc-200 to-transparent opacity-50"></div>
 

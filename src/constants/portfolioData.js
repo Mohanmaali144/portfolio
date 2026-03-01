@@ -60,7 +60,7 @@ export const aboutBentoData = [
 
 export const profileData = {
     fullName: 'Mohan Maali',
-    location: 'Madhya Pradesh, India',
+    location: 'Indore MP, India',
     email: 'mohanmaali144@gmail.com',
     resume: '/resume.pdf',
     whatsapp: {
@@ -72,14 +72,15 @@ export const profileData = {
         { name: 'GitHub', href: 'https://github.com/Mohanmaali144', icon: Github },
         { name: 'Instagram', href: '#', icon: Instagram },
         { name: 'Twitter', href: '#', icon: Twitter }
-    ]
+    ],
+    image : "/public/Image2.jpg"
 };
 
 export const heroRoles = [
     "MERN Stack Developer",
     "Full-Stack Engineer",
     "API Architect",
-    "Problem Solver"
+    // "Problem Solver"
 ];
 
 export const servicesData = [
@@ -133,13 +134,13 @@ export const techGroupsData = [
         title: "DATABASE",
         icon: Database,
         tag: "DATA",
-        skills: ["MongoDB", "Redis", "Database Modeling"]
+        skills: ["MongoDB", "Redis", "MySQL / PostgreSQL"]
     },
     {
         title: "TOOLS",
         icon: Wrench,
         tag: "DEVOPS",
-        skills: ["Git / GitHub", "Authentication Systems", "Performance Optimization"]
+        skills: ["Git / GitHub", "PostMain", "Docker", "Jest / Mocha"]
     }
 ];
 
@@ -163,9 +164,48 @@ export const projectsData = [
         tags: ["React.js", "Next.js", "Node.js", "NestJS", "MongoDB"],
         link: "#",
         github: "https://github.com/Mohanmaali144"
+    },
+    {
+        id: 3,
+        title: "CodeFlow CMS",
+        category: "Headless CMS Platform",
+        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop",
+        description: "A modular headless CMS built with role-based access control. Includes dynamic content types, media upload system, JWT authentication with refresh tokens, caching with Redis, and reusable common modules for multi-project usage.",
+        tags: ["Next.js", "NestJS", "MongoDB", "Redis", "JWT"],
+        link: "#",
+        github: "https://github.com/Mohanmaali144"
+    },
+    {
+        id: 4,
+        title: "Real-Time Help Request Platform",
+        category: "Community Assistance Platform",
+        image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2070&auto=format&fit=crop",
+        description: "A platform where users can post help requests and others can apply to provide assistance. Includes real-time notifications using WebSockets, application tracking system, and role-based dashboards.",
+        tags: ["Next.js", "NestJS", "Socket.io", "MongoDB"],
+        link: "#",
+        github: "https://github.com/Mohanmaali144"
+    },
+    {
+        id: 5,
+        title: "Scrapify Marketplace",
+        category: "Second-Hand Marketplace",
+        image: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=2070&auto=format&fit=crop",
+        description: "A marketplace for selling scrap materials and second-hand products. Includes admin approval workflow, pickup scheduling, payment integration, driver management system, and order lifecycle tracking.",
+        tags: ["Next.js", "NestJS", "MongoDB", "Stripe API"],
+        link: "#",
+        github: "https://github.com/Mohanmaali144"
+    },
+    {
+        id: 6,
+        title: "Salon Appointment Booking System",
+        category: "Service Scheduling Platform",
+        image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2070&auto=format&fit=crop",
+        description: "A full-stack appointment booking system where customers can schedule services based on staff availability. Features include time-slot management, conflict prevention logic, admin/staff dashboards, automated booking status updates, and secure online payments.",
+        tags: ["Next.js", "NestJS", "MongoDB", "JWT", "Payment Gateway"],
+        link: "#",
+        github: "https://github.com/Mohanmaali144"
     }
 ];
-
 export const resumeExperiencesData = [
     {
         company: "IBR Infotech",
@@ -180,7 +220,7 @@ export const resumeExperiencesData = [
             "Participating in code reviews and improving code quality",
             "Debugging and resolving issues in live client projects"
         ],
-        technologies: ["Next.js", "NestJS", "Node.js", "MongoDB", "React.js"]
+        technologies: ["Next.js", "Node.js", "MongoDB", "React.js" ,"N8N",]
     },
     {
         company: "Foduu",
