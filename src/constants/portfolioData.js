@@ -73,7 +73,7 @@ export const profileData = {
         { name: 'Instagram', href: '#', icon: Instagram },
         { name: 'Twitter', href: '#', icon: Twitter }
     ],
-    image : "/public/Image2.jpg"
+    image : "public/Image2.jpg"
 };
 
 export const heroRoles = [
