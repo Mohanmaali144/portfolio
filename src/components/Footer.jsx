@@ -12,7 +12,7 @@ export const Footer = () => {
         { name: "Services", href: "#services" },
         { name: "Work", href: "#work" },
         { name: "Tech Stack", href: "#tech" },
-        { name: "About", href: "#about" },
+        { name: "FAQ", href: "#faq" },
         { name: "Contact", href: "#contact" },
     ];
 
@@ -59,6 +59,8 @@ export const Footer = () => {
                                     <a
                                         key={i}
                                         href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="group w-12 h-12 rounded-full bg-white flex items-center justify-center text-zinc-400 hover:bg-black hover:text-white transition-all duration-500 hover:scale-110 shadow-sm border border-zinc-50 relative overflow-hidden"
                                         title={social.name}
                                     >

@@ -1,5 +1,9 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap');
+
+@theme {
+  --font-sans: 'Geist', system-ui, sans-serif;
+}
 
 html {
   scroll-behavior: smooth;
@@ -8,21 +12,23 @@ html {
 body {
   background-color: #FFFFFF;
   color: #000000;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #000000;
-  letter-spacing: -0.02em;
-}
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #000000;
+    letter-spacing: -0.02em;
+  }
 
-p {
-  color: #52525B;
+  p {
+    color: #52525B;
+  }
 }

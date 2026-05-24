@@ -1,24 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { trustBarBuildTypesData } from '../constants/portfolioData';
+import { SectionHeading } from './ui/SectionHeading';
 
 export const TrustBar = () => (
     <section className="py-8 bg-white relative overflow-hidden trust-section">
         {/* Subtle Section Divider */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-12 bg-gradient-to-b from-zinc-200 to-transparent opacity-50"></div>
 
-        <div className="flex flex-col items-center mb-12">
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-zinc-50 px-5 py-2 rounded-full border border-zinc-100/50 shadow-sm"
-            >
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">
-                    What I Can Build
-                </span>
-            </motion.div>
-        </div>
+        <SectionHeading eyebrow="Build Capacity" title="What I Can Build" />
 
         <div className="relative">
             {/* Fade Overlays */}

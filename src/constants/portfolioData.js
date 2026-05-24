@@ -20,41 +20,37 @@ import {
     Music
 } from 'lucide-react';
 
-export const aboutBentoData = [
+export const contactHelpOptions = [
+    'Job Opportunity',
+    'Collaboration',
+    'Full-stack web app',
+    'Frontend / UI work',
+    'Backend & APIs',
+    'Performance audit',
+    'Maintenance & retainer',
+    'Something else',
+];
+
+export const faqData = [
     {
-        id: 'location',
-        label: 'Base',
-        title: 'Madhya Pradesh, India',
-        description: 'Working with clients and teams on full-stack MERN applications from my focused workstation.',
-        status: { available: true, text: 'Available for new opportunities' },
-        icon: Globe,
-        className: 'md:col-span-2 md:row-span-2 bg-white rounded-[3rem] p-10 flex flex-col justify-between hover:shadow-lg transition-all duration-500 group relative overflow-hidden border border-zinc-100',
-        animation: { initial: { opacity: 0, x: -50 }, transition: { duration: 0.7 } }
+        q: "What services do you offer?",
+        a: "I work on full-stack web applications including frontend (React, Next.js, TypeScript), backend (Node.js, .NET, REST APIs), database design (MongoDB, PostgreSQL, Redis), DevOps, and ongoing maintenance."
     },
     {
-        id: 'experience',
-        label: 'Years of Craft',
-        value: '01+',
-        icon: Award,
-        className: 'bg-zinc-900 rounded-[3rem] p-8 flex flex-col justify-center items-center text-center gap-2 group hover:scale-[1.02] transition-transform duration-500',
-        animation: { initial: { opacity: 0, scale: 0.8 }, transition: { duration: 0.6, delay: 0.2 } }
+        q: "How long does a typical project take?",
+        a: "Anywhere from 2 weeks for a focused prototype to 3+ months for a full product build. I'll always give a clear estimate after a short scoping call."
     },
     {
-        id: 'projects',
-        label: 'Projects Shipped',
-        value: '10+',
-        icon: Briefcase,
-        className: 'bg-[#EBEBEB] rounded-[3rem] p-8 flex flex-col justify-center items-center text-center gap-2 group hover:bg-white hover:shadow-lg transition-all duration-500',
-        animation: { initial: { opacity: 0, scale: 0.8 }, transition: { duration: 0.6, delay: 0.3 } }
+        q: "Do you work with startups and small businesses?",
+        a: "Yes — most of my clients are early-stage teams and indie founders. I love working with people who care about shipping quickly and iteratively."
     },
     {
-        id: 'music',
-        label: 'On Rotation',
-        title: 'Blinding Lights — The Weeknd',
-        subtitle: 'Playlist: Late Night Coding',
-        icon: Music,
-        className: 'bg-[#F8F8F8] rounded-[3.5rem] p-8 flex items-center gap-6 group hover:bg-white hover:shadow-lg transition-all duration-500',
-        animation: { initial: { opacity: 0, y: 50 }, transition: { duration: 0.7, delay: 0.4 } }
+        q: "What makes your work different?",
+        a: "Senior-level rigour at an indie price: clear communication, fast turnaround, no surprise scope creep, and code that's clean enough that your next dev will thank me."
+    },
+    {
+        q: "Do you provide ongoing support and maintenance?",
+        a: "Absolutely. I offer monthly retainers for ongoing maintenance, performance work, and feature additions after launch."
     }
 ];
 
@@ -68,12 +64,12 @@ export const profileData = {
         defaultMessage: 'Hi Mohan, I just saw your portfolio and would love to discuss a project with you!'
     },
     socialLinks: [
-        { name: 'LinkedIn', href: 'https://linkedin.com/in/mohan-maali', icon: Linkedin },
-        { name: 'GitHub', href: 'https://github.com/Mohanmaali144', icon: Github },
-        { name: 'Instagram', href: '#', icon: Instagram },
-        { name: 'Twitter', href: '#', icon: Twitter }
+        { name: 'LinkedIn', href: 'https://www.linkedin.com/in/mohan-maali', icon: Linkedin },
+        { name: 'GitHub', href: 'https://github.com/mohanmaali144', icon: Github },
+        { name: 'Instagram', href: 'https://www.instagram.com/____mohan__maali____?igsh=YndnYjllbG83cWp0', icon: Instagram },
+        { name: 'Twitter', href: 'https://x.com/Mohan_oon', icon: Twitter }
     ],
-    image : "public/Image2.jpg"
+    image: "/image2.jpg"
 };
 
 export const heroRoles = [
@@ -84,10 +80,30 @@ export const heroRoles = [
 ];
 
 export const servicesData = [
-    { title: "Full-Stack Development", desc: "Building scalable full-stack applications using Next.js, NestJS, Node.js, and MongoDB.", icon: Code },
-    { title: "REST API Design", desc: "Designing and integrating robust REST APIs that connect frontend and backend seamlessly.", icon: Cpu },
-    { title: "Web Applications", desc: "Developing and maintaining client-facing web applications with clean, maintainable code.", icon: Monitor },
-    { title: "UI & Design", desc: "Crafting user-friendly interfaces with Figma and translating them into responsive frontends.", icon: Palette }
+    {
+        title: "Full-Stack Development",
+        desc: "Building scalable full-stack applications using Next.js, NestJS, Node.js, and MongoDB.",
+        icon: Code,
+        tags: ["Next.js", "NestJS", "Node.js", "MongoDB"]
+    },
+    {
+        title: "REST API Design",
+        desc: "Designing and integrating robust REST APIs that connect frontend and backend seamlessly.",
+        icon: Cpu,
+        tags: ["Express", "NestJS", "Swagger", "Postman"]
+    },
+    {
+        title: "Web Applications",
+        desc: "Developing and maintaining client-facing web applications with clean, maintainable code.",
+        icon: Monitor,
+        tags: ["React", "Vite", "Tailwind", "TypeScript"]
+    },
+    {
+        title: "UI & Design",
+        desc: "Crafting user-friendly interfaces with Figma and translating them into responsive frontends.",
+        icon: Palette,
+        tags: ["Figma", "Tailwind", "Framer Motion"]
+    }
 ];
 
 export const processStepsData = [
@@ -119,28 +135,28 @@ export const processStepsData = [
 
 export const techGroupsData = [
     {
-        title: "FRONTEND",
+        title: "Frontend",
         icon: Monitor,
         tag: "UI/UX",
-        skills: ["React.js / Next.js", "JavaScript", "Figma / Canva"]
+        skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML", "Tailwind CSS", "Redux", "Framer Motion"]
     },
     {
-        title: "BACKEND",
+        title: "Backend",
         icon: Cpu,
         tag: "SERVER",
-        skills: ["Node.js / Express.js", "NestJS", "REST APIs"]
+        skills: ["Node.js", "Express", "NestJS", "REST APIs", "GraphQL", "Socket.io", ".NET", "C#", "EF Core"]
     },
     {
-        title: "DATABASE",
+        title: "Database",
         icon: Database,
         tag: "DATA",
-        skills: ["MongoDB", "Redis", "MySQL / PostgreSQL"]
+        skills: ["MongoDB", "PostgreSQL", "MySQL", "Redis", "Mongoose", "Prisma", "SQL Server"]
     },
     {
-        title: "TOOLS",
+        title: "Tools & DevOps",
         icon: Wrench,
         tag: "DEVOPS",
-        skills: ["Git / GitHub", "PostMain", "Docker", "Jest / Mocha"]
+        skills: ["Git", "GitHub", "Docker", "Vercel", "AWS", "GitHub Actions", "Postman", "Figma"]
     }
 ];
 
@@ -264,36 +280,6 @@ export const resumeEducationData = [
             "Biology stream with strong analytical foundation"
         ],
         coursework: ["Biology", "Chemistry", "Physics", "Mathematics"]
-    }
-];
-
-export const experienceSummaryData = [
-    {
-        company: "IBR Infotech",
-        role: "MERN Stack Developer",
-        period: "August 2025 — Present",
-        desc: "Collaborating with cross-functional teams to build and maintain client-facing web applications using the MERN stack."
-    },
-    {
-        company: "Foduu",
-        role: "MERN Stack Developer",
-        period: "July 2024 — August 2025",
-        desc: "Developed full-stack web applications, designed REST APIs, and improved application performance and stability."
-    }
-];
-
-export const educationSummaryData = [
-    {
-        school: "Harda Adarsh College, Barkatullah University",
-        degree: "Bachelor of Computer Application",
-        period: "2024 — 2027",
-        desc: "Pursuing BCA with hands-on experience in full-stack MERN development and scalable application architecture."
-    },
-    {
-        school: "Government Hr. Sec. School, Vikrampur",
-        degree: "Higher Secondary Certificate",
-        period: "2022",
-        desc: "Completed HSC in Biology stream, building an analytical and problem-solving foundation."
     }
 ];
 

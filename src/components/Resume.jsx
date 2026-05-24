@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, GraduationCap, MapPin, Calendar } from 'lucide-react';
 import { resumeExperiencesData, resumeEducationData } from '../constants/portfolioData';
+import { SectionHeading } from './ui/SectionHeading';
 
 const TimelineItem = ({ children, delay = 0, isLast = false }) => (
     <motion.div
@@ -9,7 +10,7 @@ const TimelineItem = ({ children, delay = 0, isLast = false }) => (
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay }}
-        className="relative flex items-start gap-6"
+        className="relative flex items-start gap-4 md:gap-6"
     >
         {/* Timeline Dot and Line */}
         <div className="relative flex-shrink-0">
@@ -25,7 +26,7 @@ const TimelineItem = ({ children, delay = 0, isLast = false }) => (
 const ExperienceCard = ({ exp, index }) => (
     <motion.div
         whileHover={{ y: -4, shadow: "0 10px 25px -5px rgba(0,0,0,0.1)" }}
-        className="bg-white rounded-[2rem] p-8 border border-zinc-100/50 hover:border-zinc-200 transition-all duration-500 cursor-pointer group"
+        className="bg-white rounded-[2rem] p-6 md:p-8 border border-zinc-100/50 hover:border-zinc-200 transition-all duration-500 cursor-pointer group"
     >
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4 mb-6">
@@ -38,10 +39,10 @@ const ExperienceCard = ({ exp, index }) => (
                         {exp.type}
                     </span>
                 </div>
-                <h3 className="text-2xl font-bold text-zinc-900 mb-1 group-hover:text-zinc-600 transition-colors">
+                <h3 className="text-xl md:text-2xl font-bold text-zinc-900 mb-1 group-hover:text-zinc-600 transition-colors">
                     {exp.role}
                 </h3>
-                <div className="flex items-center gap-4 text-zinc-500">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-zinc-500">
                     <span className="font-medium">{exp.company}</span>
                     <span className="flex items-center gap-1 text-sm">
                         <MapPin size={14} />
@@ -49,7 +50,7 @@ const ExperienceCard = ({ exp, index }) => (
                     </span>
                 </div>
             </div>
-            <div className="flex flex-col items-end gap-2">
+            <div className="flex flex-col items-start lg:items-end gap-2">
                 <span className="flex items-center gap-2 text-sm font-medium text-zinc-600 bg-zinc-50 px-4 py-2 rounded-full border border-zinc-100">
                     <Calendar size={14} />
                     {exp.period}
@@ -90,7 +91,7 @@ const ExperienceCard = ({ exp, index }) => (
 const EducationCard = ({ edu, index }) => (
     <motion.div
         whileHover={{ y: -4, shadow: "0 10px 25px -5px rgba(0,0,0,0.1)" }}
-        className="bg-white rounded-[2rem] p-8 border border-zinc-100/50 hover:border-zinc-200 transition-all duration-500 cursor-pointer group"
+        className="bg-white rounded-[2rem] p-6 md:p-8 border border-zinc-100/50 hover:border-zinc-200 transition-all duration-500 cursor-pointer group"
     >
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4 mb-6">
@@ -103,10 +104,10 @@ const EducationCard = ({ edu, index }) => (
                         {edu.type}
                     </span>
                 </div>
-                <h3 className="text-2xl font-bold text-zinc-900 mb-1 group-hover:text-zinc-600 transition-colors">
+                <h3 className="text-xl md:text-2xl font-bold text-zinc-900 mb-1 group-hover:text-zinc-600 transition-colors">
                     {edu.degree}
                 </h3>
-                <div className="flex items-center gap-4 text-zinc-500">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-zinc-500">
                     <span className="font-medium">{edu.school}</span>
                     <span className="flex items-center gap-1 text-sm">
                         <MapPin size={14} />
@@ -114,7 +115,7 @@ const EducationCard = ({ edu, index }) => (
                     </span>
                 </div>
             </div>
-            <div className="flex flex-col items-end gap-2">
+            <div className="flex flex-col items-start lg:items-end gap-2">
                 <span className="flex items-center gap-2 text-sm font-medium text-zinc-600 bg-zinc-50 px-4 py-2 rounded-full border border-zinc-100">
                     <Calendar size={14} />
                     {edu.period}
@@ -154,21 +155,9 @@ const EducationCard = ({ edu, index }) => (
 
 export const Resume = () => (
     <section className="py-24 px-6 md:px-0">
-        <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-        >
-            <h2 className="text-2xl md:text-3xl font-medium text-zinc-900 mb-4">
-                Resume & Journey
-            </h2>
-            <div className="bg-zinc-100 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest text-zinc-400 inline-block">
-                Experience & Education
-            </div>
-        </motion.div>
+        <SectionHeading eyebrow="Experience & Education" title="Resume & Journey" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 max-w-7xl mx-auto">
             {/* Experience Column */}
             <div className="space-y-8">
                 <motion.div

@@ -17,7 +17,7 @@ export const Navbar = () => {
                 { id: 'services', name: 'Services' },
                 { id: 'work', name: 'Work' },
                 { id: 'tech', name: 'Tech Stack' },
-                { id: 'about', name: 'About' },
+                { id: 'faq', name: 'FAQ' },
                 { id: 'contact', name: 'Contact' }
             ];
             
@@ -44,7 +44,7 @@ export const Navbar = () => {
         { name: "Services", href: "#services" },
         { name: "Work", href: "#work" },
         { name: "Tech Stack", href: "#tech" },
-        { name: "About", href: "#about" },
+        { name: "FAQ", href: "#faq" },
         { name: "Contact", href: "#contact" },
     ];
 

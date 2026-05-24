@@ -7,7 +7,7 @@ import { Services } from './components/Services';
 import { Process } from './components/Process';
 import { TechStack } from './components/TechStack';
 import { Projects } from './components/Projects';
-import { BentoAbout } from './components/BentoAbout';
+import { FAQ } from './components/FAQ';
 import { Resume } from './components/Resume';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
@@ -37,7 +37,7 @@ export default function App() {
             <Process />
             <TechStack />
             <Projects />
-            <BentoAbout />
+            <FAQ />
             <Resume />
           </div>
         </div>
