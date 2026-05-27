@@ -56,34 +56,61 @@ const fetchRepoMeta = async (fullName) => {
     }
 };
 
-const extractCommits = (events) => {
-    const out = [];
+const fetchCommitDetail = async (repoFullName, sha) => {
+    try {
+        const r = await fetch(
+            `https://api.github.com/repos/${repoFullName}/commits/${sha}`,
+            { headers: ghHeaders() }
+        );
+        if (!r.ok) return null;
+        return await r.json();
+    } catch {
+        return null;
+    }
+};
+
+// GitHub's events endpoint returns PushEvent payloads WITHOUT the commits[]
+// array — only `head` (latest SHA) and `before`. So we collect candidate SHAs
+// from the events feed and fetch each commit's detail in parallel.
+const extractCommits = async (events) => {
+    const targets = [];
     const seen = new Set();
     for (const ev of events) {
         if (ev.type !== 'PushEvent') continue;
-        const commits = ev.payload?.commits || [];
-        // Walk newest-first within a push
-        for (let i = commits.length - 1; i >= 0; i--) {
-            const c = commits[i];
-            if (!c?.sha) continue;
-            if (seen.has(c.sha)) continue;
-            seen.add(c.sha);
-            const firstLine = String(c.message || '').split('\n')[0].trim();
-            if (!firstLine) continue;
-            // Skip noisy merge / generated commits
-            if (/^Merge (pull request|branch|remote)/i.test(firstLine)) continue;
-            out.push({
-                sha: c.sha,
-                shortSha: c.sha.slice(0, 7),
-                message: firstLine,
-                repo: ev.repo.name,
-                date: ev.created_at,
-                url: `https://github.com/${ev.repo.name}/commit/${c.sha}`,
-            });
-            if (out.length >= MAX_COMMITS) return out;
-        }
+        const sha = ev.payload?.head;
+        if (!sha || seen.has(sha)) continue;
+        seen.add(sha);
+        targets.push({
+            sha,
+            repo: ev.repo.name,
+            eventDate: ev.created_at,
+        });
+        if (targets.length >= MAX_COMMITS) break;
     }
-    return out;
+
+    const detailed = await Promise.all(
+        targets.map(async (t) => {
+            const data = await fetchCommitDetail(t.repo, t.sha);
+            if (!data) return null;
+            const firstLine = String(data.commit?.message || '')
+                .split('\n')[0]
+                .trim();
+            if (!firstLine) return null;
+            if (/^Merge (pull request|branch|remote)/i.test(firstLine)) return null;
+            return {
+                sha: t.sha,
+                shortSha: t.sha.slice(0, 7),
+                message: firstLine,
+                repo: t.repo,
+                date: data.commit?.author?.date || t.eventDate,
+                url:
+                    data.html_url ||
+                    `https://github.com/${t.repo}/commit/${t.sha}`,
+            };
+        })
+    );
+
+    return detailed.filter(Boolean);
 };
 
 const polishWithGroq = async (commits, repoMeta) => {
@@ -153,7 +180,19 @@ export default async function handler(req, res) {
 
     try {
         const events = await fetchEvents();
-        const commits = extractCommits(events);
+        const commits = await extractCommits(events);
+
+        if (commits.length === 0) {
+            const payload = {
+                user: GITHUB_USER,
+                profileUrl: `https://github.com/${GITHUB_USER}`,
+                commits: [],
+                fetchedAt: new Date().toISOString(),
+                aiPolished: false,
+            };
+            cache = { ts: Date.now(), data: payload };
+            return json(res, 200, payload);
+        }
 
         const repoNames = [...new Set(commits.map((c) => c.repo))];
         const repoMetaEntries = await Promise.all(
