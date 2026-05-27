@@ -3,7 +3,7 @@
 // to rewrite each commit message into a clean one-line summary. Cached
 // in-memory for 30 minutes so we don't hammer either API.
 
-const GITHUB_USER = 'mohanmaali144';
+const GITHUB_USER = 'Mohanmaali144';
 const MAX_COMMITS = 12;
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
