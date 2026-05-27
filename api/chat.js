@@ -20,6 +20,47 @@ const GROQ_MODEL = 'llama-3.3-70b-versatile';
 const MAX_MESSAGES = 12;
 const MAX_CONTENT_CHARS = 2000;
 
+const MONTH_INDEX = {
+    january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+    july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+};
+
+const parseMonthYear = (str) => {
+    const trimmed = String(str).trim();
+    if (/^present$/i.test(trimmed) || /^now$/i.test(trimmed)) return new Date();
+    const parts = trimmed.split(/\s+/);
+    if (parts.length < 2) return null;
+    const m = MONTH_INDEX[parts[0].toLowerCase()];
+    const y = Number(parts[1]);
+    if (m === undefined || !y) return null;
+    return new Date(y, m, 1);
+};
+
+const computeExperience = () => {
+    let totalMonths = 0;
+    for (const exp of resumeExperiencesData) {
+        const [startStr, endStr] = exp.period.split(/[–—-]/).map((s) => s.trim());
+        const start = parseMonthYear(startStr);
+        const end = parseMonthYear(endStr) || new Date();
+        if (!start) continue;
+        const months =
+            (end.getFullYear() - start.getFullYear()) * 12 +
+            (end.getMonth() - start.getMonth());
+        totalMonths += Math.max(0, months);
+    }
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+    const parts = [];
+    if (years > 0) parts.push(`${years} year${years === 1 ? '' : 's'}`);
+    if (months > 0) parts.push(`${months} month${months === 1 ? '' : 's'}`);
+    const label = parts.join(' ') || '0 months';
+    return { totalMonths, years, months, label, roleCount: resumeExperiencesData.length };
+};
+
+const exp = computeExperience();
+const currentExp = resumeExperiencesData[0] || null;
+const currentStart = currentExp ? currentExp.period.split(/[–—-]/)[0].trim() : '';
+
 const formatProjects = () =>
     projectsData
         .map(
@@ -87,7 +128,12 @@ ${formatServices()}
 ## Tech stack
 ${formatTech()}
 
-## Experience
+## Career snapshot (USE THESE NUMBERS when asked about years of experience — do not invent your own)
+- **Total professional experience:** ${exp.label} (${exp.totalMonths} months total across ${exp.roleCount} full-time role${exp.roleCount === 1 ? '' : 's'})
+- **Years (rounded):** ${exp.years} year${exp.years === 1 ? '' : 's'} ${exp.months} month${exp.months === 1 ? '' : 's'}
+- **Currently working at:** ${currentExp ? `${currentExp.company} as ${currentExp.role} since ${currentStart}` : 'N/A'}
+
+## Experience (most recent first)
 ${formatExperience()}
 
 ## Education
@@ -132,6 +178,8 @@ const FEW_SHOT = [
     { role: 'assistant', content: 'Indore, MP — India.' },
     { role: 'user', content: 'what does he do' },
     { role: 'assistant', content: "He's a **MERN stack developer** — builds full-stack web apps with React, Next.js, NestJS, and MongoDB. Want to see some of his work?" },
+    { role: 'user', content: 'how many years of experience does he have' },
+    { role: 'assistant', content: `Around **${exp.label}** of full-time experience across ${exp.roleCount} role${exp.roleCount === 1 ? '' : 's'} — currently at ${currentExp ? currentExp.company : 'a MERN role'}.` },
     { role: 'user', content: 'show me a project' },
     { role: 'assistant', content: "Sure, here's a recent one:\n[[PROJECT:3]]\nWant another?" },
     { role: 'user', content: 'how do i contact him' },

@@ -149,6 +149,20 @@ const ProjectCard = ({ project }) => (
     </div>
 );
 
+// Trim the visible window so a partially-typed `[[PROJECT:...` token never
+// flashes as plain text on its way to becoming a card.
+const safeDisplayText = (full, length) => {
+    let display = full.slice(0, length);
+    const lastOpen = display.lastIndexOf('[[');
+    if (lastOpen !== -1) {
+        const after = display.slice(lastOpen);
+        if (!after.includes(']]')) {
+            display = display.slice(0, lastOpen);
+        }
+    }
+    return display;
+};
+
 const renderBotMessage = (text) => {
     const parts = [];
     const regex = /\[\[PROJECT:(\d+)\]\]/g;
@@ -188,6 +202,8 @@ export const AiChat = () => {
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    // typing: { fullContent: string, length: number } while a bot message is being typed out
+    const [typing, setTyping] = useState(null);
     const scrollRef = useRef(null);
     const inputRef = useRef(null);
 
@@ -195,7 +211,32 @@ export const AiChat = () => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
-    }, [messages, loading, isOpen]);
+    }, [messages, loading, isOpen, typing]);
+
+    // Typing-effect advancer: progressively reveals the bot reply ~3 chars / 18ms.
+    useEffect(() => {
+        if (!typing) return;
+        const done = typing.length >= typing.fullContent.length;
+        const t = setTimeout(() => {
+            if (done) {
+                setMessages((prev) => [
+                    ...prev,
+                    { role: 'assistant', content: typing.fullContent },
+                ]);
+                setTyping(null);
+            } else {
+                setTyping((cur) =>
+                    cur
+                        ? {
+                              ...cur,
+                              length: Math.min(cur.length + 3, cur.fullContent.length),
+                          }
+                        : cur
+                );
+            }
+        }, done ? 120 : 18);
+        return () => clearTimeout(t);
+    }, [typing]);
 
     useEffect(() => {
         if (isOpen && inputRef.current) {
@@ -206,7 +247,7 @@ export const AiChat = () => {
 
     const send = async (textOverride) => {
         const text = (textOverride ?? input).trim();
-        if (!text || loading) return;
+        if (!text || loading || typing) return;
 
         const next = [...messages, { role: 'user', content: text }];
         setMessages(next);
@@ -233,22 +274,19 @@ export const AiChat = () => {
             const reply =
                 res.data?.reply?.trim() ||
                 "Sorry, I couldn't generate a reply. Try again?";
-            setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
+            setLoading(false);
+            setTyping({ fullContent: reply, length: 0 });
         } catch (e) {
             const msg =
                 e.response?.data?.error ||
                 e.message ||
                 'Something went wrong.';
             setError(msg);
-            setMessages((prev) => [
-                ...prev,
-                {
-                    role: 'assistant',
-                    content: `Hmm, something went wrong on my end. You can reach Mohan directly at [${profileData.email}](mailto:${profileData.email}) or on [WhatsApp](https://wa.me/${profileData.whatsapp.phoneNumber}).`,
-                },
-            ]);
-        } finally {
             setLoading(false);
+            setTyping({
+                fullContent: `Hmm, something went wrong on my end. You can reach Mohan directly at [${profileData.email}](mailto:${profileData.email}) or on [WhatsApp](https://wa.me/${profileData.whatsapp.phoneNumber}).`,
+                length: 0,
+            });
         }
     };
 
@@ -259,7 +297,17 @@ export const AiChat = () => {
         }
     };
 
-    const showSuggestions = messages.length === 1 && !loading;
+    const skipTyping = () => {
+        if (!typing) return;
+        setMessages((prev) => [
+            ...prev,
+            { role: 'assistant', content: typing.fullContent },
+        ]);
+        setTyping(null);
+    };
+
+    const showSuggestions = messages.length === 1 && !loading && !typing;
+    const isBusy = loading || !!typing;
 
     return (
         <>
@@ -360,6 +408,24 @@ export const AiChat = () => {
                                     </div>
                                 )}
 
+                                {typing && (
+                                    <div
+                                        className="flex justify-start gap-2 cursor-pointer"
+                                        onClick={skipTyping}
+                                        title="Tap to skip"
+                                    >
+                                        <div className="shrink-0 w-7 h-7 rounded-full bg-zinc-900 text-white flex items-center justify-center mt-0.5">
+                                            <Bot className="w-3.5 h-3.5" />
+                                        </div>
+                                        <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-white border border-zinc-200 px-3.5 py-2 shadow-sm">
+                                            {renderBotMessage(
+                                                safeDisplayText(typing.fullContent, typing.length)
+                                            )}
+                                            <span className="inline-block w-[2px] h-[14px] align-[-2px] ml-0.5 bg-zinc-700 animate-pulse" />
+                                        </div>
+                                    </div>
+                                )}
+
                                 {showSuggestions && (
                                     <div className="pt-1 flex flex-wrap gap-2">
                                         {suggestedQuestions.map((q) => (
@@ -384,7 +450,7 @@ export const AiChat = () => {
                                     {error}
                                 </div>
                             )}
-                            <div className="flex items-end gap-2 rounded-2xl border border-zinc-200 bg-zinc-50 focus-within:border-zinc-400 focus-within:bg-white transition px-3 py-2">
+                            <div className="flex items-center gap-2 rounded-2xl border border-zinc-200 bg-zinc-50 focus-within:border-zinc-400 focus-within:bg-white transition px-3 py-1.5">
                                 <textarea
                                     ref={inputRef}
                                     value={input}
@@ -392,17 +458,17 @@ export const AiChat = () => {
                                     onKeyDown={handleKey}
                                     placeholder="Ask about projects, skills, hiring..."
                                     rows={1}
-                                    className="flex-1 resize-none bg-transparent outline-none text-[13.5px] text-zinc-900 placeholder:text-zinc-400 max-h-28"
-                                    disabled={loading}
+                                    className="flex-1 resize-none bg-transparent outline-none text-[13.5px] text-zinc-900 placeholder:text-zinc-400 leading-6 py-1.5 max-h-28 block"
+                                    disabled={isBusy}
                                 />
                                 <button
                                     type="button"
                                     onClick={() => send()}
-                                    disabled={loading || !input.trim()}
+                                    disabled={isBusy || !input.trim()}
                                     className="shrink-0 w-9 h-9 rounded-xl bg-zinc-900 text-white flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:bg-black transition"
                                     aria-label="Send"
                                 >
-                                    {loading ? (
+                                    {isBusy ? (
                                         <Loader2 className="w-4 h-4 animate-spin" />
                                     ) : (
                                         <Send className="w-4 h-4" />
