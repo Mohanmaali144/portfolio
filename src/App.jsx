@@ -10,6 +10,7 @@ import { Projects } from './components/Projects';
 import { FAQ } from './components/FAQ';
 import { Resume } from './components/Resume';
 import { Contact } from './components/Contact';
+import { Updates } from './components/Updates';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { AiChat } from './components/AiChat';
@@ -46,6 +47,10 @@ export default function App() {
 
         <div className="px-4 md:px-10 mb-8">
           <Contact />
+        </div>
+
+        <div className="px-4 md:px-10 mb-8">
+          <Updates />
         </div>
 
         <FooterCard className="relative overflow-hidden !max-w-none !bg-[#EBEBEB] !pb-12 !pt-12">
