@@ -12,11 +12,13 @@ import { Resume } from './components/Resume';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { AiChat } from './components/AiChat';
 
 export default function App() {
   return (
     <div className="min-h-screen bg-white">
       <WhatsAppButton />
+      <AiChat />
       <Navbar />
 
       <div className="max-w-full mx-auto">
