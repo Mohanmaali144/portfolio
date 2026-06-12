@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Mail, MapPin, Clock, Send, Loader2, Check, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { profileData, contactHelpOptions } from '../constants/portfolioData';
-import { WhatsAppButton } from './WhatsAppButton';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -78,7 +77,7 @@ export const Contact = () => {
     return (
         <section
             id="contact"
-            className="py-12 md:py-16 px-4 md:px-10 bg-[#F4F4F4] rounded-[2.5rem] md:rounded-[4rem]"
+            className="py-12 md:py-16 px-4 md:px-10 bg-[#F4F4F4] dark:bg-[#0E0E10] rounded-[2.5rem] md:rounded-[4rem]"
         >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
                 {/* LEFT: Heading + separate info cards */}
@@ -91,14 +90,14 @@ export const Contact = () => {
                         transition={{ duration: 0.5 }}
                         className="flex flex-col items-start gap-4 px-2 md:px-3 mb-3 mt-2"
                     >
-                        <span className="inline-flex items-center gap-2 bg-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500 border border-zinc-200 shadow-sm">
+                        <span className="inline-flex items-center gap-2 bg-white dark:bg-zinc-800 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-white/10 shadow-sm">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                             Available for Projects
                         </span>
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-[1.1]">
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.1]">
                             Let's Work Together.
                         </h2>
-                        <p className="text-base text-zinc-600 font-medium leading-relaxed max-w-md">
+                        <p className="text-base text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed max-w-md">
                             Have a project in mind, a question, or just want to say hi? Drop a message — I read every email and reply within a day.
                         </p>
                     </motion.div>
@@ -132,7 +131,7 @@ export const Contact = () => {
                         transition={{ duration: 0.4, delay: 0.2 }}
                         className="px-2 mt-1"
                     >
-                        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 block mb-3">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500 block mb-3">
                             Find me on
                         </span>
                         <div className="flex flex-wrap gap-2">
@@ -145,13 +144,12 @@ export const Contact = () => {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         aria-label={social.name}
-                                        className="w-10 h-10 rounded-lg bg-[#F8F8F8] border border-zinc-100 text-zinc-700 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300"
+                                        className="w-10 h-10 rounded-lg bg-[#F8F8F8] dark:bg-zinc-800 border border-zinc-100 dark:border-white/10 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 dark:hover:bg-white dark:hover:text-zinc-900 dark:hover:border-white hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300"
                                     >
                                         <SocialIcon size={18} />
                                     </a>
                                 );
                             })}
-                            <WhatsAppButton />
                         </div>
                     </motion.div>
                 </div>
@@ -163,7 +161,7 @@ export const Contact = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.1 }}
-                    className="lg:col-span-6 bg-white rounded-[2rem] p-4 md:p-7 border border-zinc-100 shadow-sm flex flex-col gap-4"
+                    className="lg:col-span-6 surface rounded-[1.75rem] p-5 md:p-7 shadow-card flex flex-col gap-4"
                 >
                     {/* Row 1: Name + Email */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -171,9 +169,10 @@ export const Contact = () => {
                             <input
                                 name="name"
                                 type="text"
+                                required
                                 value={formData.name}
                                 onChange={onChange}
-                                placeholder={profileData.fullName}
+                                placeholder="Your full name"
                                 className={inputCls}
                             />
                         </Field>
@@ -181,9 +180,10 @@ export const Contact = () => {
                             <input
                                 name="email"
                                 type="email"
+                                required
                                 value={formData.email}
                                 onChange={onChange}
-                                placeholder={profileData.email}
+                                placeholder="you@example.com"
                                 className={inputCls}
                             />
                         </Field>
@@ -203,7 +203,7 @@ export const Contact = () => {
                                     <option key={opt} value={opt}>{opt}</option>
                                 ))}
                             </select>
-                            <span className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-zinc-400 text-xs">
+                            <span className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 text-xs">
                                 ▾
                             </span>
                         </div>
@@ -226,6 +226,7 @@ export const Contact = () => {
                         <textarea
                             name="message"
                             rows={5}
+                            required
                             value={formData.message}
                             onChange={onChange}
                             placeholder="Tell me a bit about your project, timeline, and what you're hoping to achieve."
@@ -236,7 +237,7 @@ export const Contact = () => {
                     <button
                         type="submit"
                         disabled={submitState === 'sending'}
-                        className="mt-2 inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 disabled:opacity-60 disabled:hover:bg-zinc-900 text-white py-4 rounded-2xl font-semibold text-sm shadow-md hover:shadow-lg transition-all"
+                        className="mt-2 inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 disabled:opacity-60 disabled:hover:bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200 dark:disabled:hover:bg-white py-4 rounded-2xl font-semibold text-sm shadow-md hover:shadow-lg transition-all"
                     >
                         {submitState === 'sending' ? (
                             <>
@@ -270,11 +271,11 @@ export const Contact = () => {
 };
 
 const inputCls =
-    'w-full bg-[#F8F8F8] border border-zinc-100 px-5 py-3.5 rounded-xl focus:bg-white focus:border-zinc-300 focus:ring-2 focus:ring-zinc-200 transition-all outline-none font-medium text-sm text-zinc-900 placeholder:text-zinc-400';
+    'w-full bg-[#F8F8F8] border border-zinc-100 px-5 py-3.5 rounded-xl focus:bg-white focus:border-zinc-300 focus:ring-2 focus:ring-zinc-200 transition-all outline-none font-medium text-sm text-zinc-900 placeholder:text-zinc-400 dark:bg-zinc-800 dark:border-white/10 dark:focus:bg-zinc-800 dark:focus:border-zinc-500 dark:focus:ring-zinc-700 dark:text-zinc-100 dark:placeholder:text-zinc-500';
 
 const Field = ({ label, required, children }) => (
     <label className="flex flex-col gap-2">
-        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500 ml-1">
+        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400 ml-1">
             {label}
             {required && <span className="text-red-500 ml-1">*</span>}
         </span>
@@ -285,20 +286,20 @@ const Field = ({ label, required, children }) => (
 const InfoCard = ({ icon: Icon, label, value, href, delay = 0 }) => {
     const content = (
         <>
-            <div className="w-10 h-10 shrink-0 rounded-xl bg-[#F8F8F8] flex items-center justify-center text-zinc-700 border border-zinc-100">
+            <div className="w-10 h-10 shrink-0 rounded-xl bg-[#F8F8F8] dark:bg-zinc-800 flex items-center justify-center text-zinc-700 dark:text-zinc-300 border border-zinc-100 dark:border-white/10">
                 <Icon size={18} />
             </div>
             <div className="flex flex-col min-w-0 flex-1">
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500 mb-1">
                     {label}
                 </span>
-                <span className="text-sm font-semibold text-zinc-900 truncate">{value}</span>
+                <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate">{value}</span>
             </div>
         </>
     );
 
     const cardCls =
-        'bg-white rounded-[1.25rem] px-4 py-3 border border-zinc-100 shadow-sm flex items-center gap-3 transition-all duration-300';
+        'surface rounded-[1.25rem] px-4 py-3.5 shadow-soft flex items-center gap-3 transition-all duration-300';
 
     const animation = {
         initial: { opacity: 0, y: 20 },
@@ -308,7 +309,7 @@ const InfoCard = ({ icon: Icon, label, value, href, delay = 0 }) => {
     };
 
     return href ? (
-        <motion.a href={href} {...animation} className={`${cardCls} hover:border-zinc-300 hover:bg-[#FAFAFA] cursor-pointer`}>
+        <motion.a href={href} {...animation} className={`${cardCls} hover:shadow-card hover:-translate-y-0.5 cursor-pointer`}>
             {content}
         </motion.a>
     ) : (

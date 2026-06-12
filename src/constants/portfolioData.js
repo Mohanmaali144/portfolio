@@ -10,6 +10,7 @@ import {
     Cpu,
     Database,
     Wrench,
+    Bot,
     Instagram,
     Twitter,
     Linkedin,
@@ -34,7 +35,7 @@ export const contactHelpOptions = [
 export const faqData = [
     {
         q: "What services do you offer?",
-        a: "I work on full-stack web applications including frontend (React, Next.js, TypeScript), backend (Node.js, .NET, REST APIs), database design (MongoDB, PostgreSQL, Redis), DevOps, and ongoing maintenance."
+        a: "I work on full-stack web applications including frontend (React, Next.js, TypeScript), backend (Node.js, NestJS, REST APIs), database design (MongoDB, PostgreSQL, Redis), AI integrations & workflow automation, DevOps, and ongoing maintenance."
     },
     {
         q: "How long does a typical project take?",
@@ -75,6 +76,8 @@ export const profileData = {
 export const heroRoles = [
     "MERN Stack Developer",
     "Full-Stack Engineer",
+    "AI Engineer",
+    "Automation Specialist",
     "API Architect",
     // "Problem Solver"
 ];
@@ -85,6 +88,12 @@ export const servicesData = [
         desc: "Building scalable full-stack applications using Next.js, NestJS, Node.js, and MongoDB.",
         icon: Code,
         tags: ["Next.js", "NestJS", "Node.js", "MongoDB"]
+    },
+    {
+        title: "AI & Automation",
+        desc: "Building AI-powered features and automated workflows — chatbots, RAG, and n8n pipelines that cut hours of manual work.",
+        icon: Bot,
+        tags: ["OpenAI", "LangChain", "n8n", "RAG"]
     },
     {
         title: "REST API Design",
@@ -144,7 +153,13 @@ export const techGroupsData = [
         title: "Backend",
         icon: Cpu,
         tag: "SERVER",
-        skills: ["Node.js", "Express", "NestJS", "REST APIs", "GraphQL", "Socket.io", ".NET", "C#", "EF Core"]
+        skills: ["Node.js", "Express", "NestJS", "REST APIs", "GraphQL", "Socket.io", "Microservices"]
+    },
+    {
+        title: "AI & Automation",
+        icon: Bot,
+        tag: "AI",
+        skills: ["AI Agents", "OpenAI API", "Groq", "LangChain", "RAG", "n8n", "Prompt Engineering", "Workflow Automation"]
     },
     {
         title: "Database",
@@ -286,6 +301,8 @@ export const resumeEducationData = [
 export const trustBarBuildTypesData = [
     { name: "Startups", desc: "MVPs" },
     { name: "SaaS", desc: "Platforms" },
+    { name: "AI Apps", desc: "Intelligent" },
+    { name: "Automation", desc: "Workflows" },
     { name: "Admin Dashboard", desc: "Panels" },
     { name: "E-commerce", desc: "Stores" },
     { name: "Fintech", desc: "Products" },

@@ -1,8 +1,16 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+/* Class-based dark mode: toggled by a `.dark` class on <html> */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: 'Geist', system-ui, sans-serif;
+
+  /* Premium layered shadows — soft, low-opacity, multi-stop */
+  --shadow-soft: 0 1px 2px rgba(24, 24, 27, 0.04), 0 2px 8px rgba(24, 24, 27, 0.04);
+  --shadow-card: 0 2px 4px rgba(24, 24, 27, 0.04), 0 12px 32px -8px rgba(24, 24, 27, 0.10);
+  --shadow-float: 0 4px 8px rgba(24, 24, 27, 0.05), 0 20px 48px -12px rgba(24, 24, 27, 0.14);
 }
 
 html {
@@ -11,10 +19,17 @@ html {
 
 body {
   background-color: #FFFFFF;
-  color: #000000;
+  color: #18181B;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.dark body {
+  background-color: #09090B;
+  color: #D4D4D8;
 }
 
 @layer base {
@@ -24,11 +39,109 @@ body {
   h4,
   h5,
   h6 {
-    color: #000000;
-    letter-spacing: -0.02em;
+    color: #09090B;
+    letter-spacing: -0.022em;
   }
 
   p {
     color: #52525B;
+  }
+
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6 {
+    color: #FAFAFA;
+  }
+
+  .dark p {
+    color: #A1A1AA;
+  }
+
+  /* Tailwind v4 reset leaves buttons with the default cursor — restore pointer */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  /* Visible focus ring for keyboard users only (mouse clicks stay clean via :focus-visible) */
+  :focus-visible {
+    outline: 2px solid #18181B;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  .dark :focus-visible {
+    outline-color: #FAFAFA;
+  }
+}
+
+@layer components {
+  /* Premium card surface: subtle vertical gradient + hairline border + faint inner ring */
+  .surface {
+    background-image: linear-gradient(to bottom, #FFFFFF, #FAFAFA);
+    border: 1px solid rgba(228, 228, 231, 0.8);
+    box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .dark .surface {
+    background-image: linear-gradient(to bottom, #18181B, #131316);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -8px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  /* Faint grid texture for feature surfaces — mirrors the hero/footer */
+  .premium-grid {
+    background-image:
+      linear-gradient(to right, rgba(9, 9, 11, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(9, 9, 11, 0.045) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .dark .premium-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+
+  /* Cursor-following spotlight — soft realistic light that tracks the pointer */
+  .spotlight-card {
+    position: relative;
+  }
+  .spotlight-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      460px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(9, 9, 11, 0.06),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+  .dark .spotlight-card::before {
+    background: radial-gradient(
+      460px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.07),
+      transparent 60%
+    );
+  }
+  .spotlight-card:hover::before {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

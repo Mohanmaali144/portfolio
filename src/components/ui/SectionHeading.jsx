@@ -2,19 +2,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export const SectionHeading = ({ eyebrow, title, description }) => (
-    <div className="w-full mb-12 flex flex-col items-center text-center">
+    <div className="w-full mb-14 flex flex-col items-center text-center">
         <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="flex items-center gap-3 mb-4"
+            className="inline-flex items-center gap-2 mb-5 rounded-full surface px-4 py-1.5"
         >
-            <span className="h-px w-8 bg-zinc-300" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-zinc-900 dark:bg-white" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-zinc-500 dark:text-zinc-400">
                 {eyebrow}
             </span>
-            <span className="h-px w-8 bg-zinc-300" />
         </motion.div>
 
         <motion.h2
@@ -22,7 +21,7 @@ export const SectionHeading = ({ eyebrow, title, description }) => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-3xl md:text-5xl font-bold text-zinc-900 leading-[1.1] tracking-tight max-w-3xl"
+            className="text-3xl md:text-5xl font-bold leading-[1.08] tracking-[-0.03em] max-w-3xl bg-gradient-to-b from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400 bg-clip-text text-transparent"
         >
             {title}
         </motion.h2>
@@ -33,7 +32,7 @@ export const SectionHeading = ({ eyebrow, title, description }) => (
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.15 }}
-                className="mt-4 text-zinc-500 text-base md:text-lg font-medium leading-relaxed max-w-xl"
+                className="mt-5 text-zinc-500 dark:text-zinc-400 text-base md:text-lg font-medium leading-relaxed max-w-xl"
             >
                 {description}
             </motion.p>

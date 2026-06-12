@@ -9,6 +9,7 @@ import {
     Sparkles,
 } from 'lucide-react';
 import { SectionHeading } from './ui/SectionHeading';
+import { onSpotlightMove } from './ui/spotlight';
 
 const ENDPOINT = '/api/github-updates';
 
@@ -31,14 +32,14 @@ const formatRelative = (iso) => {
 };
 
 const SkeletonCard = () => (
-    <div className="rounded-2xl border border-zinc-200 bg-[#F8F8F8] p-4 animate-pulse">
+    <div className="surface rounded-2xl p-4 animate-pulse">
         <div className="flex items-center gap-2 mb-3">
-            <div className="w-4 h-4 rounded bg-zinc-200" />
-            <div className="h-3 w-24 rounded bg-zinc-200" />
-            <div className="h-3 w-16 rounded bg-zinc-200 ml-auto" />
+            <div className="w-4 h-4 rounded bg-zinc-200 dark:bg-zinc-700" />
+            <div className="h-3 w-24 rounded bg-zinc-200 dark:bg-zinc-700" />
+            <div className="h-3 w-16 rounded bg-zinc-200 dark:bg-zinc-700 ml-auto" />
         </div>
-        <div className="h-4 w-full rounded bg-zinc-200 mb-2" />
-        <div className="h-4 w-3/4 rounded bg-zinc-200" />
+        <div className="h-4 w-full rounded bg-zinc-200 dark:bg-zinc-700 mb-2" />
+        <div className="h-4 w-3/4 rounded bg-zinc-200 dark:bg-zinc-700" />
     </div>
 );
 
@@ -51,37 +52,38 @@ const CommitCard = ({ commit, index }) => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.4, delay: 0.05 * index }}
-        className="group block rounded-2xl border border-zinc-200 bg-[#F8F8F8] hover:bg-white hover:border-zinc-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-4"
+        onMouseMove={onSpotlightMove}
+        className="group spotlight-card block surface rounded-2xl shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-300 p-4"
     >
-        <div className="flex items-center gap-2 mb-2.5 text-[11px] font-medium uppercase tracking-[0.15em] text-zinc-500">
-            <GitCommit className="w-3.5 h-3.5 text-zinc-700" />
-            <span className="text-zinc-900 font-semibold normal-case tracking-normal text-[12.5px]">
+        <div className="flex items-center gap-2 mb-2.5 text-[11px] font-medium uppercase tracking-[0.15em] text-zinc-500 dark:text-zinc-400">
+            <GitCommit className="w-3.5 h-3.5 text-zinc-700 dark:text-zinc-300" />
+            <span className="text-zinc-900 dark:text-zinc-100 font-semibold normal-case tracking-normal text-[12.5px]">
                 {commit.repo}
             </span>
             {commit.repoLanguage && (
-                <span className="hidden sm:inline-block text-[10px] px-1.5 py-0.5 rounded-full bg-zinc-200/70 text-zinc-700 normal-case tracking-normal">
+                <span className="hidden sm:inline-block text-[10px] px-1.5 py-0.5 rounded-full bg-zinc-200/70 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300 normal-case tracking-normal">
                     {commit.repoLanguage}
                 </span>
             )}
-            <span className="ml-auto normal-case tracking-normal text-zinc-400">
+            <span className="ml-auto normal-case tracking-normal text-zinc-400 dark:text-zinc-500">
                 {formatRelative(commit.date)}
             </span>
         </div>
 
-        <p className="text-[14px] text-zinc-900 leading-relaxed font-medium">
+        <p className="text-[14px] text-zinc-900 dark:text-zinc-100 leading-relaxed font-medium">
             {commit.polished}
         </p>
 
         {commit.polished !== commit.message && (
-            <p className="mt-1.5 text-[11.5px] text-zinc-500 italic line-clamp-1">
-                <span className="not-italic font-mono text-zinc-400 mr-1.5">
+            <p className="mt-1.5 text-[11.5px] text-zinc-500 dark:text-zinc-400 italic line-clamp-1">
+                <span className="not-italic font-mono text-zinc-400 dark:text-zinc-500 mr-1.5">
                     {commit.sha}
                 </span>
                 {commit.message}
             </p>
         )}
 
-        <div className="mt-3 flex items-center gap-1.5 text-[11px] text-zinc-500 group-hover:text-zinc-900 transition">
+        <div className="mt-3 flex items-center gap-1.5 text-[11px] text-zinc-500 group-hover:text-zinc-900 dark:text-zinc-400 dark:group-hover:text-zinc-100 transition">
             <span>View on GitHub</span>
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </div>
@@ -126,18 +128,18 @@ export const Updates = () => {
 
             <div className="max-w-5xl mx-auto">
                 <div className="flex items-center justify-between gap-3 mb-5">
-                    <div className="flex items-center gap-2 text-[12px] text-zinc-500">
-                        <Github className="w-4 h-4 text-zinc-700" />
+                    <div className="flex items-center gap-2 text-[12px] text-zinc-500 dark:text-zinc-400">
+                        <Github className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
                         <a
                             href={data?.profileUrl || 'https://github.com/mohanmaali144'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="font-semibold text-zinc-900 hover:underline underline-offset-2"
+                            className="font-semibold text-zinc-900 dark:text-zinc-100 hover:underline underline-offset-2"
                         >
                             @{data?.user || 'mohanmaali144'}
                         </a>
                         {data?.aiPolished && (
-                            <span className="hidden sm:inline-flex items-center gap-1 text-[10.5px] px-2 py-0.5 rounded-full bg-zinc-900 text-white ml-1">
+                            <span className="hidden sm:inline-flex items-center gap-1 text-[10.5px] px-2 py-0.5 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 ml-1">
                                 <Sparkles className="w-3 h-3" /> AI polished
                             </span>
                         )}
@@ -151,7 +153,7 @@ export const Updates = () => {
                         type="button"
                         onClick={load}
                         disabled={loading}
-                        className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold uppercase tracking-wider text-zinc-700 hover:text-black disabled:opacity-40 disabled:cursor-not-allowed transition"
+                        className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold uppercase tracking-wider text-zinc-700 hover:text-black dark:text-zinc-300 dark:hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition"
                     >
                         <RefreshCw
                             className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`}
@@ -161,16 +163,16 @@ export const Updates = () => {
                 </div>
 
                 {error && !loading && commits.length === 0 && (
-                    <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6 text-center">
-                        <p className="text-sm text-zinc-700 mb-2">
+                    <div className="rounded-2xl border border-zinc-200 bg-zinc-50 dark:border-white/10 dark:bg-zinc-800 p-6 text-center">
+                        <p className="text-sm text-zinc-700 dark:text-zinc-300 mb-2">
                             Couldn&apos;t reach GitHub right now.
                         </p>
-                        <p className="text-xs text-zinc-500 mb-4">{error}</p>
+                        <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-4">{error}</p>
                         <a
                             href="https://github.com/mohanmaali144"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-zinc-900 hover:underline"
+                            className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-zinc-900 dark:text-zinc-100 hover:underline"
                         >
                             Visit profile directly
                             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -195,7 +197,7 @@ export const Updates = () => {
                 )}
 
                 {!loading && !error && commits.length === 0 && (
-                    <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6 text-center text-sm text-zinc-600">
+                    <div className="rounded-2xl border border-zinc-200 bg-zinc-50 dark:border-white/10 dark:bg-zinc-800 p-6 text-center text-sm text-zinc-600 dark:text-zinc-400">
                         No public commits found in the last few days.
                     </div>
                 )}
