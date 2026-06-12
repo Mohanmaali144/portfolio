@@ -23,7 +23,7 @@ const renderInline = (text) => {
                     key={`img-${key++}`}
                     src={m[3]}
                     alt={m[2]}
-                    className="my-2 rounded-lg max-w-full h-auto border border-zinc-200"
+                    className="my-2 rounded-lg max-w-full h-auto border border-zinc-200 dark:border-white/10"
                 />
             );
         } else if (m[4]) {
@@ -40,7 +40,7 @@ const renderInline = (text) => {
             );
         } else if (m[7]) {
             tokens.push(
-                <strong key={`b-${key++}`} className="font-semibold text-zinc-900">
+                <strong key={`b-${key++}`} className="font-semibold text-zinc-900 dark:text-zinc-100">
                     {m[8]}
                 </strong>
             );
@@ -54,7 +54,7 @@ const renderInline = (text) => {
             tokens.push(
                 <code
                     key={`c-${key++}`}
-                    className="px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-900 text-[12px] font-mono"
+                    className="px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 text-[12px] font-mono"
                 >
                     {m[12]}
                 </code>
@@ -94,8 +94,8 @@ const renderMarkdownBlock = (text, baseKey) => {
 };
 
 const ProjectCard = ({ project }) => (
-    <div className="my-2 rounded-2xl border border-zinc-200 bg-white overflow-hidden shadow-sm">
-        <div className="aspect-[16/9] w-full overflow-hidden bg-zinc-100">
+    <div className="my-2 rounded-2xl border border-zinc-200 bg-white dark:border-white/10 dark:bg-zinc-800 overflow-hidden shadow-sm">
+        <div className="aspect-[16/9] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-700">
             <img
                 src={project.image}
                 alt={project.title}
@@ -105,21 +105,21 @@ const ProjectCard = ({ project }) => (
         </div>
         <div className="p-3">
             <div className="flex items-baseline justify-between gap-2">
-                <h4 className="text-sm font-semibold text-zinc-900 leading-tight">
+                <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 leading-tight">
                     {project.title}
                 </h4>
-                <span className="text-[10px] uppercase tracking-wider text-zinc-500 whitespace-nowrap">
+                <span className="text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 whitespace-nowrap">
                     {project.category}
                 </span>
             </div>
-            <p className="mt-1.5 text-[12.5px] text-zinc-600 leading-relaxed line-clamp-3">
+            <p className="mt-1.5 text-[12.5px] text-zinc-600 dark:text-zinc-400 leading-relaxed line-clamp-3">
                 {project.description}
             </p>
             <div className="mt-2 flex flex-wrap gap-1">
                 {project.tags.map((t) => (
                     <span
                         key={t}
-                        className="text-[10px] px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200"
+                        className="text-[10px] px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-700 dark:text-zinc-300 dark:border-white/10"
                     >
                         {t}
                     </span>
@@ -130,7 +130,7 @@ const ProjectCard = ({ project }) => (
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-zinc-700 hover:text-black font-medium"
+                    className="inline-flex items-center gap-1 text-zinc-700 hover:text-black dark:text-zinc-300 dark:hover:text-white font-medium"
                 >
                     <Github className="w-3.5 h-3.5" /> GitHub
                 </a>
@@ -187,7 +187,7 @@ const renderBotMessage = (text) => {
         const cleaned = p.text.replace(/^\n+|\n+$/g, '');
         if (!cleaned) return null;
         return (
-            <div key={p.key} className="text-[13.5px] text-zinc-800">
+            <div key={p.key} className="text-[13.5px] text-zinc-800 dark:text-zinc-200">
                 {renderMarkdownBlock(cleaned, p.key)}
             </div>
         );
@@ -323,12 +323,12 @@ export const AiChat = () => {
                         exit={{ opacity: 0, scale: 0.5, y: 10 }}
                         whileHover={{ scale: 1.08, translateY: -3 }}
                         whileTap={{ scale: 0.92 }}
-                        className="fixed bottom-30 right-10 z-[1000] w-16 h-16 rounded-full bg-zinc-900 text-white flex items-center justify-center shadow-[0_15px_40px_rgba(0,0,0,0.35)] group overflow-visible"
+                        className="fixed bottom-30 right-10 z-[1000] w-16 h-16 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 flex items-center justify-center shadow-[0_15px_40px_rgba(0,0,0,0.35)] dark:shadow-[0_15px_40px_rgba(0,0,0,0.5)] cursor-pointer group overflow-visible"
                         aria-label="Open AI assistant"
                     >
-                        <span className="absolute inset-0 rounded-full bg-zinc-900/40 animate-ping opacity-30 scale-125 pointer-events-none" />
+                        <span className="absolute inset-0 rounded-full bg-zinc-900/40 dark:bg-white/30 animate-ping opacity-30 scale-125 pointer-events-none" />
                         <Sparkles className="w-7 h-7 relative z-10" />
-                        <div className="absolute right-20 bg-black text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all pointer-events-none shadow-xl whitespace-nowrap">
+                        <div className="absolute right-20 bg-black text-white dark:bg-white dark:text-zinc-900 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all pointer-events-none shadow-xl whitespace-nowrap">
                             Ask the AI
                         </div>
                     </motion.button>
@@ -344,7 +344,7 @@ export const AiChat = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 24, scale: 0.96 }}
                         transition={{ type: 'spring', damping: 22, stiffness: 260 }}
-                        className="fixed z-[1001] bottom-6 right-4 sm:right-6 w-[min(92vw,400px)] h-[min(80vh,600px)] bg-white rounded-3xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.45)] border border-zinc-200 flex flex-col overflow-hidden"
+                        className="fixed z-[1001] bottom-6 right-4 sm:right-6 w-[min(92vw,400px)] h-[min(80vh,600px)] bg-white rounded-3xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.45)] border border-zinc-200 dark:bg-zinc-900 dark:border-white/10 flex flex-col overflow-hidden"
                     >
                         {/* Header */}
                         <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-200 bg-gradient-to-br from-zinc-900 to-zinc-800 text-white">
@@ -373,22 +373,22 @@ export const AiChat = () => {
                         {/* Messages */}
                         <div
                             ref={scrollRef}
-                            className="flex-1 overflow-y-auto px-4 py-4 bg-[radial-gradient(ellipse_at_top,rgba(244,244,245,0.8),rgba(255,255,255,1)_60%)]"
+                            className="flex-1 overflow-y-auto px-4 py-4 bg-[radial-gradient(ellipse_at_top,rgba(244,244,245,0.8),rgba(255,255,255,1)_60%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(39,39,42,0.6),rgba(24,24,27,1)_60%)]"
                         >
                             <div className="space-y-3">
                                 {messages.map((m, i) =>
                                     m.role === 'user' ? (
                                         <div key={i} className="flex justify-end">
-                                            <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-zinc-900 text-white px-3.5 py-2 text-[13.5px] leading-relaxed whitespace-pre-wrap shadow-sm">
+                                            <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 px-3.5 py-2 text-[13.5px] leading-relaxed whitespace-pre-wrap shadow-sm">
                                                 {m.content}
                                             </div>
                                         </div>
                                     ) : (
                                         <div key={i} className="flex justify-start gap-2">
-                                            <div className="shrink-0 w-7 h-7 rounded-full bg-zinc-900 text-white flex items-center justify-center mt-0.5">
+                                            <div className="shrink-0 w-7 h-7 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 flex items-center justify-center mt-0.5">
                                                 <Bot className="w-3.5 h-3.5" />
                                             </div>
-                                            <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-white border border-zinc-200 px-3.5 py-2 shadow-sm">
+                                            <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-white border border-zinc-200 dark:bg-zinc-800 dark:border-white/10 px-3.5 py-2 shadow-sm">
                                                 {renderBotMessage(m.content)}
                                             </div>
                                         </div>
@@ -397,13 +397,13 @@ export const AiChat = () => {
 
                                 {loading && (
                                     <div className="flex justify-start gap-2">
-                                        <div className="shrink-0 w-7 h-7 rounded-full bg-zinc-900 text-white flex items-center justify-center mt-0.5">
+                                        <div className="shrink-0 w-7 h-7 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 flex items-center justify-center mt-0.5">
                                             <Bot className="w-3.5 h-3.5" />
                                         </div>
-                                        <div className="rounded-2xl rounded-bl-sm bg-white border border-zinc-200 px-3.5 py-2.5 shadow-sm flex items-center gap-1.5">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce [animation-delay:-0.3s]" />
-                                            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce [animation-delay:-0.15s]" />
-                                            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce" />
+                                        <div className="rounded-2xl rounded-bl-sm bg-white border border-zinc-200 dark:bg-zinc-800 dark:border-white/10 px-3.5 py-2.5 shadow-sm flex items-center gap-1.5">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-500 animate-bounce [animation-delay:-0.3s]" />
+                                            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-500 animate-bounce [animation-delay:-0.15s]" />
+                                            <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-500 animate-bounce" />
                                         </div>
                                     </div>
                                 )}
@@ -414,14 +414,14 @@ export const AiChat = () => {
                                         onClick={skipTyping}
                                         title="Tap to skip"
                                     >
-                                        <div className="shrink-0 w-7 h-7 rounded-full bg-zinc-900 text-white flex items-center justify-center mt-0.5">
+                                        <div className="shrink-0 w-7 h-7 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 flex items-center justify-center mt-0.5">
                                             <Bot className="w-3.5 h-3.5" />
                                         </div>
-                                        <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-white border border-zinc-200 px-3.5 py-2 shadow-sm">
+                                        <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-white border border-zinc-200 dark:bg-zinc-800 dark:border-white/10 px-3.5 py-2 shadow-sm">
                                             {renderBotMessage(
                                                 safeDisplayText(typing.fullContent, typing.length)
                                             )}
-                                            <span className="inline-block w-[2px] h-[14px] align-[-2px] ml-0.5 bg-zinc-700 animate-pulse" />
+                                            <span className="inline-block w-[2px] h-[14px] align-[-2px] ml-0.5 bg-zinc-700 dark:bg-zinc-300 animate-pulse" />
                                         </div>
                                     </div>
                                 )}
@@ -433,7 +433,7 @@ export const AiChat = () => {
                                                 key={q}
                                                 type="button"
                                                 onClick={() => send(q)}
-                                                className="text-[12px] px-3 py-1.5 rounded-full bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 transition"
+                                                className="text-[12px] px-3 py-1.5 rounded-full bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 dark:bg-zinc-800 dark:border-white/10 dark:text-zinc-300 dark:hover:bg-white dark:hover:text-zinc-900 dark:hover:border-white transition"
                                             >
                                                 {q}
                                             </button>
@@ -444,13 +444,13 @@ export const AiChat = () => {
                         </div>
 
                         {/* Input */}
-                        <div className="border-t border-zinc-200 bg-white p-3">
+                        <div className="border-t border-zinc-200 bg-white dark:border-white/10 dark:bg-zinc-900 p-3">
                             {error && (
-                                <div className="mb-2 text-[11px] text-red-600 bg-red-50 border border-red-200 rounded-lg px-2.5 py-1.5">
+                                <div className="mb-2 text-[11px] text-red-600 bg-red-50 border border-red-200 dark:text-red-400 dark:bg-red-950/40 dark:border-red-900/50 rounded-lg px-2.5 py-1.5">
                                     {error}
                                 </div>
                             )}
-                            <div className="flex items-center gap-2 rounded-2xl border border-zinc-200 bg-zinc-50 focus-within:border-zinc-400 focus-within:bg-white transition px-3 py-1.5">
+                            <div className="flex items-center gap-2 rounded-2xl border border-zinc-200 bg-zinc-50 focus-within:border-zinc-400 focus-within:bg-white dark:border-white/10 dark:bg-zinc-800 dark:focus-within:border-zinc-500 dark:focus-within:bg-zinc-800 transition px-3 py-1.5">
                                 <textarea
                                     ref={inputRef}
                                     value={input}
@@ -458,14 +458,14 @@ export const AiChat = () => {
                                     onKeyDown={handleKey}
                                     placeholder="Ask about projects, skills, hiring..."
                                     rows={1}
-                                    className="flex-1 resize-none bg-transparent outline-none text-[13.5px] text-zinc-900 placeholder:text-zinc-400 leading-6 py-1.5 max-h-28 block"
+                                    className="flex-1 resize-none bg-transparent outline-none text-[13.5px] text-zinc-900 placeholder:text-zinc-400 dark:text-zinc-100 dark:placeholder:text-zinc-500 leading-6 py-1.5 max-h-28 block"
                                     disabled={isBusy}
                                 />
                                 <button
                                     type="button"
                                     onClick={() => send()}
                                     disabled={isBusy || !input.trim()}
-                                    className="shrink-0 w-9 h-9 rounded-xl bg-zinc-900 text-white flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:bg-black transition"
+                                    className="shrink-0 w-9 h-9 rounded-xl bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed hover:bg-black dark:hover:bg-zinc-200 transition"
                                     aria-label="Send"
                                 >
                                     {isBusy ? (
@@ -475,7 +475,7 @@ export const AiChat = () => {
                                     )}
                                 </button>
                             </div>
-                            <div className="mt-1.5 text-[10px] text-zinc-400 text-center">
+                            <div className="mt-1.5 text-[10px] text-zinc-400 dark:text-zinc-500 text-center">
                                 {/* Powered by Groq · Llama 3.3 */}
                             </div>
                         </div>

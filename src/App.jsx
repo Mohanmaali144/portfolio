@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Card, HeroCard, FooterCard } from './components/ui/Card';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -7,27 +7,37 @@ import { Services } from './components/Services';
 import { Process } from './components/Process';
 import { TechStack } from './components/TechStack';
 import { Projects } from './components/Projects';
-import { FAQ } from './components/FAQ';
 import { Resume } from './components/Resume';
 import { Contact } from './components/Contact';
 import { Updates } from './components/Updates';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
-import { AiChat } from './components/AiChat';
+import { ErrorBoundary } from './components/ui/ErrorBoundary';
+import { Analytics } from '@vercel/analytics/react';
+
+// Lazy-loaded: the AI chat (+ its markdown renderer) is heavy and most visitors
+// never open it, so it's split into its own chunk loaded on demand.
+const AiChat = lazy(() =>
+  import('./components/AiChat').then((m) => ({ default: m.AiChat }))
+);
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-[#09090B]">
       <WhatsAppButton />
-      <AiChat />
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          <AiChat />
+        </Suspense>
+      </ErrorBoundary>
       <Navbar />
 
-      <div className="max-w-full mx-auto">
-        <HeroCard className="relative overflow-hidden shadow-sm border border-zinc-200/60 ring-1 ring-white/40 !bg-[#EBEBEB] !max-w-none !pt-32">
+      <main className="max-w-full mx-auto">
+        <HeroCard className="relative overflow-hidden shadow-sm border border-zinc-200/60 dark:border-white/10 ring-1 ring-white/40 dark:ring-white/5 !bg-[#EBEBEB] dark:!bg-[#141417] !max-w-none !pt-32">
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.92),rgba(255,255,255,0)_55%)]" />
-            <div className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(to_right,rgba(0,0,0,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.18)_1px,transparent_1px)] [background-size:28px_28px]" />
-            <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white/40 to-transparent" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.92),rgba(255,255,255,0)_55%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.05),rgba(255,255,255,0)_55%)]" />
+            <div className="absolute inset-0 opacity-[0.18] dark:opacity-100 [background-image:linear-gradient(to_right,rgba(0,0,0,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.18)_1px,transparent_1px)] dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:28px_28px]" />
+            <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white/40 dark:from-white/5 to-transparent" />
           </div>
           <Hero />
         </HeroCard>
@@ -40,7 +50,6 @@ export default function App() {
             <Process />
             <TechStack />
             <Projects />
-            <FAQ />
             <Resume />
           </div>
         </div>
@@ -50,17 +59,23 @@ export default function App() {
         </div>
 
         <div className="px-4 md:px-10 mb-8">
-          <Updates />
+          <ErrorBoundary>
+            <Updates />
+          </ErrorBoundary>
         </div>
+      </main>
 
-        <FooterCard className="relative overflow-hidden !max-w-none !bg-[#EBEBEB] !pb-12 !pt-12">
+      <div className="max-w-full mx-auto">
+        <FooterCard className="relative overflow-hidden !max-w-none !bg-[#EBEBEB] dark:!bg-[#141417] !pb-12 !pt-12">
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.75),rgba(255,255,255,0)_60%)]" />
-            <div className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(to_right,rgba(0,0,0,0.16)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.16)_1px,transparent_1px)] [background-size:32px_32px]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.75),rgba(255,255,255,0)_60%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.04),rgba(255,255,255,0)_60%)]" />
+            <div className="absolute inset-0 opacity-[0.18] dark:opacity-100 [background-image:linear-gradient(to_right,rgba(0,0,0,0.16)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.16)_1px,transparent_1px)] dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:32px_32px]" />
           </div>
           <Footer />
         </FooterCard>
       </div>
+
+      <Analytics />
     </div>
   );
 }
